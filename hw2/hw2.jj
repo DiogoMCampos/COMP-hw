@@ -1,0 +1,25 @@
+PARSER_BEGIN(HW2)
+
+public class HW2 {
+    public static void main(String args[]) throws ParseException {
+        HW2 parser = new HW2(System.in);
+        try {
+            parser.Solve();
+        } catch (Throwable e) {
+    		System.out.println("Rejected.");
+    	}
+    }
+}
+
+PARSER_END(HW2)
+
+
+TOKEN : {
+	<Expr: (("a")* "b" ("b")* | "a" ("a")* "b" ("c")* | "ef") "\n">
+}
+
+void Solve() : {}   {
+    <Expr> {
+        System.out.println("Accepted.");
+    }
+}
