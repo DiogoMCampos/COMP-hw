@@ -1,0 +1,49 @@
+PARSER_BEGIN(HW4)
+
+public class HW4 {
+    public static void main(String args[]) throws ParseException {
+        HW4 parser = new HW4(System.in);
+        try {
+            parser.Start();
+        } catch (Throwable e) {
+    		System.out.println("Rejected.");
+    	}
+    }
+}
+
+PARSER_END(HW4)
+
+SKIP : {
+	" " | "\t" | "\r"
+}
+
+TOKEN : {
+	<INT : (["0"-"9"])+>
+	| <ADD : "+">
+	| <SUB : "-">
+	| <MUL : "*">
+	| <DIV : "/">
+    | <LF : "\n">
+}
+
+void Start() : {} {
+	Expr() <LF> {
+        System.out.println("Accepted.");
+    }
+}
+
+void Expr() : {} {
+	Term() ExprP()
+}
+
+void ExprP() : {} {
+	((<ADD> | <SUB>) Term() ExprP())?
+}
+
+void Term() : {} {
+	<INT> TermP()
+}
+
+void TermP() : {} {
+	((<MUL> | <DIV>) <INT> TermP())?
+}
